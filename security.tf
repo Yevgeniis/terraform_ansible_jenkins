@@ -1,9 +1,10 @@
 resource "aws_security_group" "allow_basic_ports" {
-  name        = "allow_basic_ports"
-  description = "Allow Basic ports 22_443_80"
+  name        = "infr_sg"
+  description = "Allow Basic ports"
   vpc_id      = aws_vpc.infr_exr.id
 
   ingress {
+    description = "Allow SSH"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
@@ -11,8 +12,17 @@ resource "aws_security_group" "allow_basic_ports" {
   }
 
   ingress {
+    description = "Allow HTTP"
     from_port   = 80
     to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+    ingress {
+    description = "Allow HTTPS"
+    from_port   = 443
+    to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
